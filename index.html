@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Toko Online</title>
+    <style>
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+        .product-card {
+            width: 300px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div id="filter-section">
+        <select id="category-filter" onchange="filterProducts()">
+            <option value="all">Semua Kategori</option>
+            <option value="elektronik">Elektronik</option>
+            <option value="fashion">Fashion</option>
+            <option value="rumah-tangga">Rumah Tangga</option>
+        </select>
+    </div>
+    
+    <div id="product-container" class="product-container"></div>
+
+    <script>
+            const products = [
+        {
+            nama: "Laptop Gaming",
+            harga: 15000000,
+            deskripsi: "Laptop khusus untuk gaming dengan GPU high-end",
+            gambar: "laptopGaming.jpg",
+            kategori: "elektronik"
+        },
+        {
+            nama: "Kemeja Flanel",
+            harga: 250000,
+            deskripsi: "Kemeja bahan flanel premium untuk pria",
+            gambar: "Kemeja Flanel.webp",
+            kategori: "fashion"
+        },
+        {
+            nama: "Blender Multifungsi",
+            harga: 500000,
+            deskripsi: "Blender 5 in 1 dengan pisau stainless steel",
+            gambar: "Blender Multifungsi.jpg",
+            kategori: "rumah-tangga"
+        },
+        {
+            nama: "Smartphone Flagship",
+            harga: 12000000,
+            deskripsi: "Smartphone dengan kamera 108MP dan 5G",
+            gambar: "Smartphone Flagship.jpg",
+            kategori: "elektronik"
+        }
+];
+        // Fungsi untuk menampilkan produk
+        function displayProducts(productsToShow) {
+            const container = document.getElementById('product-container');
+            container.innerHTML = ''; // Kosongkan kontainer sebelum menambahkan produk baru
+            
+            productsToShow.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="${product.gambar}" class="product-image" alt="${product.nama}">
+                    <h3>${product.nama}</h3>
+                    <p>Harga: Rp ${product.harga.toLocaleString('id-ID')}</p>
+                    <p>${product.deskripsi}</p>
+                    <p>Kategori: ${product.kategori}</p>
+                `;
+                container.appendChild(productCard);
+            });
+        }
+
+        // Tampilkan semua produk saat pertama kali halaman dimuat
+        displayProducts(products);
+
+        // Tambahkan fungsi filter di dalam tag script yang sama
+function filterProducts() {
+    const selectedCategory = document.getElementById('category-filter').value;
+    
+    if(selectedCategory === 'all') {
+        displayProducts(products);
+    } else {
+        const filteredProducts = products.filter(product => 
+            product.kategori === selectedCategory
+        );
+        displayProducts(filteredProducts);
+    }
+}
+    </script>
+</body>
+</html>
